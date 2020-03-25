@@ -24,6 +24,7 @@
     "@actions/exec": "^1.0.0",
     "@actions/github": "^1.0.0",
     "@octokit/action": "^2.0.1",
+    "@octokit/plugin-request-log": "^1.0.0",
     "axios": "^0.19.1"
   },
   "devDependencies": {

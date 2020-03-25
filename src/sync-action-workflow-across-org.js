@@ -1,5 +1,8 @@
 const core = require("@actions/core");
-const { Octokit } = require("@octokit/action");
+const { Octokit: ActionOctokit } = require("@octokit/action");
+const { requestLog } = require("@octokit/plugin-request-log");
+
+const Octokit = ActionOctokit.plugin(requestLog);
 
 async function run() {
   try {
