@@ -8431,13 +8431,15 @@ const { Octokit } = __webpack_require__(725);
 async function run() {
   try {
     // Get authenticated GitHub client (Ocktokit): https://github.com/actions/toolkit/tree/master/packages/github#usage
-    const github = new Octokit();
+    const github = new Octokit({
+      log: console
+    });
 
     // Get owner, repo, and event from context of payload that triggered the action
-    const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
+    const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
 
     // Get the inputs from the workflow file: https://github.com/actions/toolkit/tree/master/packages/core#inputsoutputs
-    const workflowName = core.getInput('workflow-name', { required: true });
+    const workflowName = core.getInput("workflow-name", { required: true });
 
     // eslint-disable-next-line no-useless-escape
     core.debug(`Searching for workflow: \'${workflowName}\'`);
@@ -8451,11 +8453,14 @@ async function run() {
     //   repo,
     //   workflow_file_name: workflowName
     // });
-    const getWorkflowResponse = await github.request('GET /repos/:owner/:repo/actions/workflows/:workflow_file_name', {
-      owner,
-      repo,
-      workflow_file_name: workflowName
-    });
+    const getWorkflowResponse = await github.request(
+      "GET /repos/:owner/:repo/actions/workflows/:workflow_file_name",
+      {
+        owner,
+        repo,
+        workflow_file_name: workflowName
+      }
+    );
 
     // Get the path of the workflow
     const workflowPath = getWorkflowResponse.data.path;
@@ -8491,7 +8496,7 @@ async function run() {
 
     // Create/Update a file with the Contents API for every repo in org
     // https://developer.github.com/v3/repos/contents/#create-or-update-a-file
-    const orgRepos = [''];
+    const orgRepos = [""];
 
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < orgRepos.length; i++) {
@@ -8501,12 +8506,14 @@ async function run() {
         repo: orgRepos[i],
         path: `.github/workflows/${workflowName}`,
         message: `Update ${workflowName}`,
-        content: Buffer.from(workflowContent).toString('base64'),
+        content: Buffer.from(workflowContent).toString("base64"),
         sha: workflowSha,
         branch: `update-workflow/${newSha.substring(0, 7)}`
       });
 
-      core.debug(`Create or Update File: ${JSON.stringify(createOrUpdateFile)}`);
+      core.debug(
+        `Create or Update File: ${JSON.stringify(createOrUpdateFile)}`
+      );
 
       // Create a PR with the contents (head is the new ref, base is the default branch)
       // https://developer.github.com/v3/pulls/#create-a-pull-request
@@ -8516,7 +8523,7 @@ async function run() {
         repo: orgRepos[i],
         title: `Update ${workflowName}`,
         head: `${newRef}`,
-        base: 'master'
+        base: "master"
       });
 
       core.debug(`Create PR: ${JSON.stringify(createPullResponse)}`);
