@@ -7243,9 +7243,9 @@ var authAction = __webpack_require__(414);
 var pluginPaginateRest = __webpack_require__(202);
 var pluginRestEndpointMethods = __webpack_require__(311);
 
-const VERSION = "2.0.1";
+const VERSION = "2.0.2";
 
-const Octokit = core.Octokit.plugin([pluginPaginateRest.paginateRest, pluginRestEndpointMethods.restEndpointMethods]).defaults({
+const Octokit = core.Octokit.plugin(pluginPaginateRest.paginateRest, pluginRestEndpointMethods.restEndpointMethods).defaults({
   authStrategy: authAction.createActionAuth,
   userAgent: `octokit-action.js/${VERSION}`
 });
@@ -8502,6 +8502,8 @@ async function run() {
         workflow_file_name: workflowName
       }
     );
+
+    core.debug(`Workflow loaded: \'${workflowName}\'`);
 
     // Get the path of the workflow
     const workflowPath = getWorkflowResponse.data.path;

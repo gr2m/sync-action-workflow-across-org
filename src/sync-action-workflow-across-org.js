@@ -38,6 +38,8 @@ async function run() {
       }
     );
 
+    core.debug(`Workflow loaded: \'${workflowName}\'`);
+
     // Get the path of the workflow
     const workflowPath = getWorkflowResponse.data.path;
 
