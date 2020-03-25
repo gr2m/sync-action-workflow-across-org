@@ -105,6 +105,7 @@ async function run() {
       core.debug(`Create PR: ${JSON.stringify(createPullResponse)}`);
     }
   } catch (error) {
+    core.debug(JSON.stringify(error.request, null, 2));
     core.setFailed(error.message);
   }
 }
