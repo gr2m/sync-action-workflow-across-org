@@ -12,4 +12,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          workflow-name: sync-workflows.yml
+          workflow-name: debug.yml
