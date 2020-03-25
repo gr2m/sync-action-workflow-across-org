@@ -40,6 +40,8 @@ async function run() {
 
     core.debug(`Workflow loaded: \'${workflowName}\'`);
 
+    console.log("dafuq?");
+
     // Get the path of the workflow
     const workflowPath = getWorkflowResponse.data.path;
 
@@ -107,6 +109,7 @@ async function run() {
       core.debug(`Create PR: ${JSON.stringify(createPullResponse)}`);
     }
   } catch (error) {
+    console.log("error!?!?!?!!?!?");
     console.log(error);
     setTimeout(() => {
       core.setFailed(error.message);
